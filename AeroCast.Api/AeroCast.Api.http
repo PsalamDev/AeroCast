@@ -1,0 +1,6 @@
+@AeroCast.Api_HostAddress = http://localhost:5226
+
+GET {{AeroCast.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
