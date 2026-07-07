@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AeroCast.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df953e5678c9727806867bdfa7577bdf1473341c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad71c4d83ebf7014b8b86e635fc08b59765a909c")]
 [assembly: System.Reflection.AssemblyProductAttribute("AeroCast.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AeroCast.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

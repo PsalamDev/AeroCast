@@ -339,10 +339,103 @@ function clearError(){
 
 
 
-// Default City
+
+// Load user's location when page opens
 
 window.onload = ()=>{
 
-    getWeather("Lagos");
+    getUserLocation();
 
 };
+
+function getUserLocation(){
+
+    if(navigator.geolocation){
+
+        navigator.geolocation.getCurrentPosition(
+
+            position => {
+
+                const latitude =
+                    position.coords.latitude;
+
+
+                const longitude =
+                    position.coords.longitude;
+
+
+                getWeatherByLocation(
+                    latitude,
+                    longitude
+                );
+
+            },
+
+
+            error => {
+
+                console.log(
+                    "Location permission denied"
+                );
+
+                // fallback
+
+                getWeather("Lagos");
+
+            }
+
+        );
+
+    }
+
+    else{
+
+        getWeather("Lagos");
+
+    }
+
+}
+
+async function getWeatherByLocation(lat, lon){
+
+    try{
+
+        showLoading();
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/current/location?lat=${lat}&lon=${lon}`
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Unable to get location weather"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        displayWeather(data);
+
+
+    }
+
+    catch(error){
+
+        showError(error.message);
+
+    }
+
+    finally{
+
+        hideLoading();
+
+    }
+
+}

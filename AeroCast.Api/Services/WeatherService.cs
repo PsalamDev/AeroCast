@@ -97,4 +97,57 @@ public class WeatherService : IWeatherService
             }).ToList()
         };
     }
+
+
+    public async Task<CurrentWeatherDto?> GetWeatherByLocationAsync(
+    double lat,
+    double lon)
+{
+    var apiKey = _configuration["OpenWeather:ApiKey"];
+
+    var url =
+        $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={apiKey}";
+
+
+    var response = await _httpClient.GetAsync(url);
+
+
+    if (!response.IsSuccessStatusCode)
+        return null;
+
+
+    var json = await response.Content.ReadAsStringAsync();
+
+
+    var weather =
+        JsonSerializer.Deserialize<CurrentWeatherResponse>(
+            json,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+
+    if(weather is null)
+        return null;
+
+
+    return new CurrentWeatherDto
+    {
+        City = weather.Name,
+        Country = weather.Sys.Country,
+        Temperature = weather.Main.Temp,
+        FeelsLike = weather.Main.FeelsLike,
+        MinTemperature = weather.Main.TempMin,
+        MaxTemperature = weather.Main.TempMax,
+        Humidity = weather.Main.Humidity,
+        Pressure = weather.Main.Pressure,
+        WindSpeed = weather.Wind.Speed,
+        Description = weather.Weather.FirstOrDefault()?.Description ?? "",
+        Icon = weather.Weather.FirstOrDefault()?.Icon ?? "",
+        Sunrise = weather.Sys.Sunrise,
+        Sunset = weather.Sys.Sunset,
+        Visibility = weather.Visibility
+    };
+}
 }

@@ -60,4 +60,25 @@ public class AeroCastController : ControllerBase
 
         return Ok(forecast);
     }
+
+
+[HttpGet("current/location")]
+public async Task<IActionResult> GetWeatherByLocation(
+    [FromQuery] double lat,
+    [FromQuery] double lon)
+{
+    var weather = await _weatherService.GetWeatherByLocationAsync(lat, lon);
+
+    if (weather is null)
+    {
+        return NotFound(new
+        {
+            Message = "Weather data not found."
+        });
+    }
+
+    return Ok(weather);
+}
+
+
 }
