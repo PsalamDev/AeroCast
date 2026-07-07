@@ -24,7 +24,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy
-            .AllowAnyOrigin()
+            .WithOrigins(
+                "https://aero-cast-forecast.vercel.app/"
+            )
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
